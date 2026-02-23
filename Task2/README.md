@@ -268,7 +268,7 @@ pandas
 
 ---
 
-# 📌 Conclusion
+# Conclusion
 
 This solution demonstrates how **SimCLR-based self-supervised learning** significantly improves performance in:
 
