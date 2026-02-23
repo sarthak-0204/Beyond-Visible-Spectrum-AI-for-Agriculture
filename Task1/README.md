@@ -24,12 +24,11 @@ Participants are required to:
 
 # Objective
 
-Given a set of multi-band satellite image samples, predict the disease category:
+Given a set of multi-band satellite image samples, predict the disease:
 
-- Aphid  
-- Blast  
-- RPH  
-- Rust  
+- Health  
+- Rust
+- Other 
 
 Each sample consists of 12 Sentinel spectral bands stored as `.tif` files.
 
@@ -41,14 +40,13 @@ Each sample consists of 12 Sentinel spectral bands stored as `.tif` files.
 data/
 │
 ├── train/
-│   ├── Aphid/
+│   ├── Health/
 │   │   ├── sample_001/
 │   │   ├── sample_002/
 │   │   └── ...
 │   │
-│   ├── Blast/
-│   ├── RPH/
-│   └── Rust/
+│   ├── Rust/
+│   ├── Other/
 │
 └── test/
     ├── sample_001/
