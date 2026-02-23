@@ -34,7 +34,7 @@ Each sample consists of 12 Sentinel spectral bands stored as `.tif` files.
 
 ---
 
-# 📂 Dataset Structure
+# Dataset Structure
 
 ```
 data/
@@ -255,7 +255,7 @@ scikit-image
 
 ---
 
-# 📌 Conclusion
+# Conclusion
 
 This Task 1 solution demonstrates effective multi-spectral crop disease classification using:
 
