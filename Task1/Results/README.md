@@ -1,59 +1,134 @@
-# Wheat Disease Multimodal Classification
+# Results – Task 1  
+## Multimodal Crop Disease Diagnosis  
+ICPR 2026 – Kaggle Competition
 
-## Overview
+This directory contains the final results for:
 
-This repository implements a multimodal deep learning solution for wheat disease classification using UAV-acquired imagery.
-
-The model combines:
-
-- RGB imagery
-- Multispectral (MS) data
-- Hyperspectral (HS) data
-
-The objective is to classify wheat patches into:
-
-- Health
-- Rust
-- Other
-
-Evaluation metric: **Macro F1 Score**
+> **Task 1 – Multimodal Crop Disease Classification**  
+> EfficientNet-B0 (12-band input) – Fully Supervised Training
 
 ---
 
-## Dataset Description
+# Experiment Summary
 
-### Data Acquisition
+### Model Configuration
 
-- Platform: DJI M600 Pro UAV  
-- Sensor: S185 Snapshot Hyperspectral  
-- Spectral Range: 450–950 nm  
-- Spectral Resolution: 4 nm  
-- Spatial Resolution: ~4 cm/pixel  
-- Acquisition Dates:
-  - May 3, 2019 (Pre-grouting stage)
-  - May 8, 2019 (Middle grouting stage)
+- Backbone: EfficientNet-B0 (modified for 12-channel input)
+- Custom classification head (3 output classes)
+- Class-weighted CrossEntropy loss
+- WeightedRandomSampler for imbalance handling
+- OneCycleLR scheduler
+- Early stopping
+- Gradient clipping
+
+Classes:
+
+- Rust  
+- Healthy  
+- Other  
+
+Training performed using 12-band Sentinel multi-spectral imagery.
+
+---
+
+# Validation Performance (Notebook Results)
+
+Metrics computed using `sklearn.metrics.classification_report`.
+
+## Overall Metrics
+
+| Metric | Score |
+|--------|--------|
+| **Validation Accuracy** | 0.69 |
+| **Macro F1-Score** | 0.68 |
+| **Weighted F1-Score** | 0.69 |
 
 ---
 
-## Modalities Used
+## Per-Class Performance
 
-### RGB
-True-color images reconstructed from hyperspectral bands.
+| Class   | Precision | Recall | F1-Score |
+|---------|----------|--------|----------|
+| Rust    | 0.67 | 0.65 | 0.66 |
+| Healthy | 0.72 | 0.74 | 0.73 |
+| Other   | 0.64 | 0.61 | 0.62 |
 
-### Multispectral (5 Bands)
-- Blue (~480nm)
-- Green (~550nm)
-- Red (~650nm)
-- Red Edge (740nm)
-- NIR (833nm)
-
-Additional vegetation indices:
-- NDVI
-- NDRE
-
-### Hyperspectral (125 Bands)
-- Bands trimmed to remove sensor noise
-- Final bands used: 10–110 (101 bands)
-- Per-sample spectral normalization applied
 
 ---
+
+# Kaggle Leaderboard Performance
+
+## Public Leaderboard Score
+
+```
+0.69473
+```
+
+## Public Leaderboard Rank
+
+```
+Tied Rank: 100–113
+```
+
+The leaderboard score is consistent with the validation metrics, indicating stable generalization to unseen test samples.
+
+---
+
+# Submission Details
+
+Submission file:
+
+```
+submission.csv
+```
+
+Format:
+
+```
+ID,Category
+```
+
+Generated using:
+
+1. Best model checkpoint (`best_model.pth`)
+2. Inference on evaluation dataset
+3. Class index → label mapping
+4. CSV export
+
+---
+
+# Directory Contents
+
+```
+results/
+│
+├── best_model.pth
+├── submission.csv
+└── README.md
+```
+
+---
+
+# Observations
+
+- Strongest performance observed on **Healthy** class
+- Rust detection reasonably balanced
+- “Other” class remains slightly more challenging
+- Macro-F1 close to accuracy → indicates relatively balanced predictions
+
+---
+
+# Final Outcome
+
+- **Validation Accuracy:** 0.69  
+- **Macro F1:** 0.68  
+- **Kaggle Public Score:** 0.69473  
+- **Leaderboard Rank:** Tied 100–113  
+
+This establishes a solid supervised multi-spectral baseline for Task 1.
+
+---
+
+Kaggle Competition:  
+**Beyond Visible Spectrum – AI for Agriculture (2026)**  
+Task 1 – Multimodal Crop Disease Diagnosis
